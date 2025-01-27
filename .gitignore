@@ -1,0 +1,17 @@
+# Editor
+.idea*
+.DS_*
+._DS_*
+._.*
+.editorconfig
+
+# Environment
+.env
+
+# Modules
+node_modules/*
+!node_modules/.keep
+
+# Public
+public/*
+!public/.keep
