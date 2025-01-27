@@ -4,6 +4,8 @@ A website containing information about the AI adoption effort in the Ministry of
 
 ## Setting up the project locally
 
+This application wequires development before it can be run locally. The following instructions will guide you through the process of setting up the project locally.
+
 ### Prerequisites
 
 Docker
