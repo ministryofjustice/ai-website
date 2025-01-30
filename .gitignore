@@ -8,10 +8,33 @@
 # Environment
 .env
 
-# Modules
-node_modules/*
-!node_modules/.keep
+# Build output
+dist/
+
+# Cache directories
+.cache/
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
 
 # Public
 public/*
 !public/.keep
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+*.bak

@@ -23,6 +23,9 @@ FROM base-node AS build-prod
 
 RUN npm i
 
+# Build the site
+RUN npm run build
+
 USER 1000
 
 ENTRYPOINT ["ash", "-c", "npm run start"]

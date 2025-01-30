@@ -1,15 +1,41 @@
 {
   "name": "justice-ai-unit-website",
   "version": "1.0.0",
-  "description": "",
+  "description": "Justice AI Unit Website",
   "main": "index.js",
   "scripts": {
-    "start": "echo 'Please, configure your start script.'",
-    "dev": "echo 'Please, configure your dev script. This will typically start your local dev environment.'"
+    "clean": "rimraf dist",
+    "debug": "set DEBUG=* & eleventy",
+    "dev:tailwind": "npx tailwindcss -i src/assets/css/tailwind.css -o dist/css/styles.css --watch",
+    "dev:eleventy": "npx @11ty/eleventy --serve",
+    "dev": "npm-run-all clean --parallel dev:*",
+    "build:tailwind": "npx tailwindcss -i src/assets/css/tailwind.css -o dist/css/styles.css --minify",
+    "build:eleventy": "ELEVENTY_PRODUCTION=true npx @11ty/eleventy",
+    "build": "NODE_ENV=production npm-run-all clean build:*",
+    "start": "npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy-navigation": "^0.3.5",
+    "@11ty/eleventy-plugin-rss": "^1.2.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^4.1.0",
+    "@tailwindcss/forms": "^0.5.3",
+    "alpinejs": "^3.10.4",
+    "dotenv": "^16.0.3",
+    "luxon": "^3.2.1",
+    "markdown-it": "^13.0.1",
+    "markdown-it-emoji": "^2.0.2",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "slugify": "^1.6.5",
+    "tailwindcss": "^3.1.8"
+  },
+  "dependencies": {
+    "debug": "^4.3.4",
+    "eleventy-plugin-svg-sprite": "^2.4.2",
+    "glob": "^11.0.1"
+  }
 }
