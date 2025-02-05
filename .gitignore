@@ -27,9 +27,6 @@ jspm_packages/
 # Optional eslint cache
 .eslintcache
 
-# Public
-public/*
-!public/.keep
 
 # IDE specific files
 .idea/
