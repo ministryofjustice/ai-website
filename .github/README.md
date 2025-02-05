@@ -34,3 +34,20 @@ make
 > In addition, on first run, `npm install` will be run in the `assets` container to install the dependencies for the app. This can take a few good seconds, meaning the app at `localhost` will show the default Nginx page until the assets are compiled.
 
 **http://localhost/** will be available in your browser.
+
+In the terminal, your cursor will be inside the node container where you can run commands like `npm run dev` or `npm run debug`.
+To exit the container, type `exit`.
+
+When exited, if you would like to see service output via stdout, you can run the following command:
+
+
+```bash
+docker compose up
+```
+
+### Stop the application
+
+To stop the application, hit control + C in the terminal.
+
+
+
