@@ -27,14 +27,15 @@ WORKDIR /home/node
 ## what do we need?
 COPY package.json package.json
 COPY package-lock.json package-lock.json
+COPY .markdownlint.json .markdownlint.json
 COPY ./src src
 COPY ./utils utils
-COPY ./tailwind.config.js tailwind.config.js
-COPY .eleventy.js .eleventy.js
-COPY .markdownlint.json .markdownlint.json
+COPY ./scripts/tailwind.config.js tailwind.config.js
+COPY ./scripts/.eleventy.js .eleventy.js
 
 RUN npm install
 RUN npm run build
+
 
 
 FROM base-app AS build-prod

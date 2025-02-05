@@ -34,7 +34,7 @@ services:
       - ./package.json:/home/node/package.json
       - ./src:/home/node/src
       - ./utils:/home/node/utils
-      - ./tailwind.config.js:/home/node/tailwind.config.js
+      - ./scripts/.eleventy.js:/home/node/.eleventy.js
+      - ./scripts/tailwind.config.js:/home/node/tailwind.config.js
       - ./Makefile:/home/node/Makefile
-      - ./.eleventy.js:/home/node/.eleventy.js
       - ./.markdownlint.json:/home/node/.markdownlint.json
