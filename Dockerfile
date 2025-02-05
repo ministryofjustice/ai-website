@@ -1,31 +1,45 @@
-FROM node:23.6-alpine AS base-node
-
-# This copies all files in our root to the working directory in the container
-# it will ingore all files and directories defined in .dockerignore
-COPY --chown=node:node ./ /home/node/
-WORKDIR /home/node/
-
-RUN chmod +x ./bin/app-install.sh
+FROM nginxinc/nginx-unprivileged:alpine3.20 AS base-app
 
 
+FROM node:23-alpine AS base-assets
+## this is a base for dev and production assets
+## dev uses make, prod does not
 
-FROM base-node AS dev
 
-RUN npm i nodemon -g
+FROM node:23-alpine AS assets-dev
 
-USER 1000
-
-ENTRYPOINT ["ash", "-c", "/home/node/bin/app-install.sh"]
+RUN apk add --no-cache make bash
 
 
 
-FROM base-node AS build-prod
+#
+#   ▒█▀▀█ █▀▀█ █▀▀█ █▀▀▄ █░░█ █▀▀ ▀▀█▀▀ ░▀░ █▀▀█ █▀▀▄
+#   ▒█▄▄█ █▄▄▀ █░░█ █░░█ █░░█ █░░ ░░█░░ ▀█▀ █░░█ █░░█
+#   ▒█░░░ ▀░▀▀ ▀▀▀▀ ▀▀▀░ ░▀▀▀ ▀▀▀ ░░▀░░ ▀▀▀ ▀▀▀▀ ▀░░▀
+#
+#   ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░
 
-RUN npm i
 
-# Build the site
+FROM base-assets AS assets
+
+## get into the home directory...
+WORKDIR /home/node
+## what do we need?
+COPY package.json package.json
+COPY package-lock.json package-lock.json
+COPY ./src src
+COPY ./utils utils
+COPY ./tailwind.config.js tailwind.config.js
+COPY .eleventy.js .eleventy.js
+COPY .markdownlint.json .markdownlint.json
+
+RUN npm install
 RUN npm run build
 
+
+FROM base-app AS build-prod
+
+COPY --from=assets /home/node/public /usr/share/nginx/html
+
 USER 1000
 
-ENTRYPOINT ["ash", "-c", "npm run start"]

@@ -3,7 +3,7 @@
 # ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░
 
 d-compose:
-	docker compose up -d node
+	docker compose up -d justice-ai
 
 d-shell: setup d-compose bash
 
@@ -11,9 +11,8 @@ setup:
 	@[ -f "./.env" ] || cp .env.example .env
 
 restart:
-	@docker compose down node
+	@docker compose down
 	@make d-compose
-
 
 
 #   █▄░█  █▀█  █▀▄  █▀▀
@@ -21,7 +20,9 @@ restart:
 
 node-assets:
 	npm install
-	npm run start
+	npm run dev
+
+
 
 # Fix audits
 fix:

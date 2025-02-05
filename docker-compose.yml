@@ -1,19 +1,40 @@
 volumes:
   node_modules:
+  public:
 
 services:
-  node:
+  justice-ai:
     build:
       context: .
-      target: dev
-    container_name: ai-website-node
+      target: base-app
+    container_name: ai-web
     env_file:
       - .env
     volumes:
-      - ./node_modules:/home/node/node_modules
-      - ./app:/home/node/app
-      - ./public:/home/node/public/
+      - public:/usr/share/nginx/html
     ports:
-      - "3052:3052"
-      - "3000:3000"
-      - "3001:3001"
+      - "80:8080"
+    depends_on:
+      node:
+        condition: service_started
+        restart: true
+
+  node:
+    container_name: ai-node
+    build:
+      context: .
+      target: assets-dev
+    working_dir: /home/node
+    tty: true
+    stop_grace_period: 0s
+    command: make node-assets
+    volumes:
+      - node_modules:/home/node/node_modules
+      - public:/home/node/dist
+      - ./package.json:/home/node/package.json
+      - ./src:/home/node/src
+      - ./utils:/home/node/utils
+      - ./tailwind.config.js:/home/node/tailwind.config.js
+      - ./Makefile:/home/node/Makefile
+      - ./.eleventy.js:/home/node/.eleventy.js
+      - ./.markdownlint.json:/home/node/.markdownlint.json
