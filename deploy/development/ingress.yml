@@ -1,16 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: applying-service-standards-dev-ingress
-  namespace: applying-service-standards-dev
+  name: ai-website-dev-ingress
+  namespace: ai-website-dev
   annotations:
-    external-dns.alpha.kubernetes.io/set-identifier: applying-service-standards-dev-ingress-applying-service-standards-dev-green
+    external-dns.alpha.kubernetes.io/set-identifier: ai-website-dev-ingress-ai-website-dev-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecAuditEngine On
       SecRuleEngine DetectionOnly
-      SecDefaultAction "phase:2,pass,log,tag:github_team=central-digital-product-team,tag:namespace=applying-service-standards-dev"
+      SecDefaultAction "phase:2,pass,log,tag:github_team=central-digital-product-team,tag:namespace=ai-website-dev"
     nginx.ingress.kubernetes.io/auth-type: basic
     nginx.ingress.kubernetes.io/auth-secret: basic-auth-secret
     nginx.ingress.kubernetes.io/auth-realm: 'Development Access | Authentication Required'
@@ -30,9 +30,9 @@ spec:
   ingressClassName: modsec
   tls:
   - hosts:
-    - dev-applying-service-standards.apps.live.cloud-platform.service.justice.gov.uk
+    - dev-ai-website.apps.live.cloud-platform.service.justice.gov.uk
   rules:
-  - host: dev-applying-service-standards.apps.live.cloud-platform.service.justice.gov.uk
+  - host: dev-ai-website.apps.live.cloud-platform.service.justice.gov.uk
     http:
       paths:
       - path: /
