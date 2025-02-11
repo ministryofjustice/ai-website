@@ -40,7 +40,7 @@ RUN npm run build
 
 FROM base-app AS build-prod
 
-COPY --from=assets /home/node/public /usr/share/nginx/html
+COPY --from=assets /home/node/dist /usr/share/nginx/html
 
 USER 1000
 
