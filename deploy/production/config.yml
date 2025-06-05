@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ai-website-prod
+  namespace: ai-website-prod
+data:
+  ENV: "production"
