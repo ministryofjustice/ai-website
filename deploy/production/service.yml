@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-service
+  namespace: ai-website-prod
+  labels:
+    app: ai-website-prod
+spec:
+  ports:
+  - port: 3052
+    name: http
+  selector:
+    app: ai-website-prod
