@@ -1,192 +1,113 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 import { motion } from "framer-motion"
-import { ChevronDown } from "lucide-react"
+import { ArrowRight, FileText, Settings, Newspaper } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import Image from "next/image"
 
 export default function Home() {
-  const [scrollY, setScrollY] = useState(0)
-  const missionRef = useRef<HTMLDivElement>(null)
+  const overviewRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  const scrollToMission = () => {
-    missionRef.current?.scrollIntoView({ behavior: "smooth" })
+  const scrollToOverview = () => {
+    overviewRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section with Parallax Effect */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Binary background with parallax */}
-        <div
-          className="absolute inset-0 z-0 bg-[url('/binary-background.png')] bg-cover bg-center"
-          style={{
-            transform: `translateY(${scrollY * 0.5}px)`,
-            opacity: 0.3,
-          }}
-        />
-
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/60 z-10"></div>
-
-        {/* Grid pattern overlay */}
-        <div
-          className="absolute inset-0 bg-[url('/grid-pattern.png')] bg-repeat z-20 opacity-10"
-          style={{
-            transform: `translateY(${scrollY * 0.2}px)`,
-          }}
-        />
-
-        {/* Content */}
-        <div className="relative z-30 max-w-5xl px-6 py-16 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <h1 className="text-5xl md:text-7xl font-extrabold leading-tight mb-6 text-white">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-purple-600">
-                Justice AI Unit
-              </span>
+    <div className="flex flex-col min-h-screen bg-white">
+      {/* Hero Section */}
+      <section className="flex items-center justify-center min-h-[90vh] pt-32 px-6">
+        <div className="max-w-4xl mx-auto text-center flex flex-col justify-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-gray-900 mb-8">
+              Building a faster, fairer, and more accessible system with AI
             </h1>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <p className="text-xl md:text-2xl font-medium text-gray-200 max-w-3xl mx-auto mb-12">
-              We're an interdisciplinary team of experts solving critical challenges across our justice system.
+            <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed">
+              The Justice AI Unit is an interdisciplinary team of AI specialists, designers,
+              technologists, and operational experts working to embed responsible AI across the justice system.
             </p>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="mt-8"
+            transition={{ duration: 0.6, delay: 0.4 }}
           >
             <Button
-              onClick={scrollToMission}
-              className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-6 text-lg group"
+              onClick={scrollToOverview}
+              className="bg-black hover:bg-gray-800 text-white rounded-full px-8 py-6 text-lg font-medium group transition-all duration-200"
             >
               Learn More
-              <ChevronDown className="ml-2 h-5 w-5 group-hover:translate-y-1 transition-transform" />
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </motion.div>
         </div>
+      </section>
 
-        {/* Animated scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30">
+      {/* Overview Section */}
+      <section ref={overviewRef} className="py-32 px-6 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
           <motion.div
-            animate={{
-              y: [0, 10, 0],
-            }}
-            transition={{
-              repeat: Number.POSITIVE_INFINITY,
-              duration: 1.5,
-            }}
-            className="text-white/70"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
           >
-            <ChevronDown className="h-8 w-8" />
+            <h2 className="text-4xl md:text-5xl font-medium text-gray-900 mb-6">Our Mission</h2>
+            <div className="w-12 h-0.5 bg-black mx-auto"></div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100"
+          >
+            <p className="text-xl text-gray-700 leading-relaxed text-center">
+              We exist to enable the safe and ethical adoption of AI across the MoJ and its agencies, helping our people deliver faster, better and more human services.
+            </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Mission Section */}
-      <section ref={missionRef} className="py-24 px-6 relative overflow-hidden">
-        {/* Background elements */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white to-gray-50"></div>
-        <div className="absolute inset-0 bg-[url('/grid-pattern.png')] bg-repeat opacity-5"></div>
-
-        <div className="max-w-5xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gray-900">
-              <span className="relative inline-block">
-                Our Mission
-                <span className="absolute -bottom-2 left-0 right-0 h-1 bg-purple-500 rounded-full"></span>
-              </span>
-            </h2>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 max-w-2xl mx-auto"
-          >
-            <div className="h-2 bg-gradient-to-r from-purple-400 to-purple-600"></div>
-            <div className="p-8">
-              <p className="text-xl text-gray-700 font-medium text-center">To transform government services using AI</p>
+      {/* Featured Image Section */}
+      <section className="py-32 px-6 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="relative rounded-2xl overflow-hidden">
+            <Image
+              src="/transform-justice-hero.png"
+              alt="AI in Justice visualisation"
+              width={1200}
+              height={600}
+              className="w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent flex items-center">
+              <div className="p-12 md:p-24 max-w-2xl">
+                <h2 className="text-3xl md:text-4xl font-medium text-white mb-6">
+                  Transforming justice with responsible AI
+                </h2>
+                <p className="text-white/90 text-lg mb-8">
+                  Our approach balances innovation with ethics, ensuring AI enhances human judgment rather than
+                  replacing it.
+                </p>
+                <Link href="/about">
+                  <Button className="bg-white text-black hover:bg-gray-100 rounded-full px-6 py-5 text-base font-medium">
+                    About our team
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </motion.div>
-
-          {/* Decorative elements */}
-          <div className="absolute -left-20 top-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute -right-20 bottom-1/4 w-60 h-60 bg-purple-500/10 rounded-full blur-3xl"></div>
-        </div>
-      </section>
-
-      {/* Strategic Priorities Section */}
-      <section className="py-24 px-6 relative overflow-hidden">
-        {/* Background elements */}
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-gray-100"></div>
-        <div className="absolute inset-0 bg-[url('/grid-pattern.png')] bg-repeat opacity-5"></div>
-
-        <div className="max-w-5xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gray-900">
-              <span className="relative inline-block">
-                Our Strategic Priorities
-                <span className="absolute -bottom-2 left-0 right-0 h-1 bg-purple-500 rounded-full"></span>
-              </span>
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              "Strengthen our foundations",
-              "Embed AI throughout the justice system",
-              "Invest in our people and partners",
-            ].map((priority, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-              >
-                <div className="h-2 bg-gradient-to-r from-purple-400 to-purple-600"></div>
-                <div className="p-8">
-                  <p className="text-xl text-gray-700 font-medium">{priority}</p>
-                </div>
-              </motion.div>
-            ))}
           </div>
-
-          {/* Decorative elements */}
-          <div className="absolute -right-20 top-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute -left-20 bottom-1/4 w-60 h-60 bg-purple-500/10 rounded-full blur-3xl"></div>
         </div>
       </section>
     </div>
