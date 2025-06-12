@@ -50,6 +50,7 @@ export default function ClientLayout({
           content="An interdisciplinary team of experts solving critical challenges across our justice system"
         />
         <meta name="generator" content="v0.dev" />
+        <link rel="icon" type="image/png" href="/icon-logo-black.png" />
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>

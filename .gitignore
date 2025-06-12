@@ -15,8 +15,12 @@ dist/
 .cache/
 
 # Dependency directories
-node_modules/
-jspm_packages/
+node_modules
+target
+dist
+logs
+.next
+npm-debug.log
 
 # TypeScript cache
 *.tsbuildinfo

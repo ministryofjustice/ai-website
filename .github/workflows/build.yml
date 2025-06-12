@@ -35,7 +35,7 @@ jobs:
           
           # ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░
                
-          docker image build -t $REGISTRY/$REPOSITORY:node-$IMAGE_TAG --target build-prod .
+          docker image build -t $REGISTRY/$REPOSITORY:node-$IMAGE_TAG .
           docker image push $REGISTRY/$REPOSITORY:node-$IMAGE_TAG
           
           # ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░  ░░

@@ -6,12 +6,12 @@ metadata:
   labels:
     app: ${KUBE_NAMESPACE}
 spec:
-  replicas: 1
+  replicas: 4
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 100%
+      maxUnavailable: 50%
+      maxSurge: 50%
   selector:
     matchLabels:
       app: ${KUBE_NAMESPACE}
@@ -21,7 +21,6 @@ spec:
         app: ${KUBE_NAMESPACE}
     spec:
       terminationGracePeriodSeconds: 35
-      serviceAccountName: cd-serviceaccount
       containers:
         - name: node
           image: ${ECR_URL}:${IMAGE_TAG}
@@ -37,10 +36,12 @@ spec:
               name: http
           securityContext:
             runAsUser: 1000
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ "ALL" ]
           envFrom:
             - configMapRef:
                 name: ${KUBE_NAMESPACE}
             - secretRef:
                 name: ${KUBE_NAMESPACE}-secrets
-            - secretRef:
-                name: ${KUBE_NAMESPACE}-base64-secrets
