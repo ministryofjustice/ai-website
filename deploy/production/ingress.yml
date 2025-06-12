@@ -12,6 +12,10 @@ metadata:
       SecRuleEngine DetectionOnly
       SecDefaultAction "phase:2,pass,log,tag:github_team=central-digital-product-team,tag:namespace=ai-website-prod"
     nginx.ingress.kubernetes.io/server-snippet: |
+      ##if ($host = 'prod-ai-website.apps.live.cloud-platform.service.justice.gov.uk') {
+      ##  return 301 ai.justice.gov.uk;
+      ##}
+      
       location = /health {
         auth_basic off;
         access_log off;
@@ -19,6 +23,7 @@ metadata:
         add_header Content-Type text/plain;
         return 200 "OK";
       }
+      
       location = /.well-known/security.txt {
         auth_basic off;
         return 301 https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt;
@@ -27,23 +32,13 @@ spec:
   ingressClassName: modsec
   tls:
     - hosts:
-        - prod-ai-website.apps.live.cloud-platform.service.justice.gov.uk
-    - hosts:
         - ai.justice.gov.uk
       secretName: ai-website-cert-secret
+    - hosts:
+        - prod-ai-website.apps.live.cloud-platform.service.justice.gov.uk
   rules:
-    - host: prod-ai-website.apps.live.cloud-platform.service.justice.gov.uk
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: node-service
-                port:
-                  number: 3000
     - host: ai.justice.gov.uk
-      http:
+      http: &http_rules
         paths:
           - path: /
             pathType: Prefix
@@ -52,3 +47,5 @@ spec:
                 name: node-service
                 port:
                   number: 3000
+    - host: prod-ai-website.apps.live.cloud-platform.service.justice.gov.uk
+      http: *http_rules
