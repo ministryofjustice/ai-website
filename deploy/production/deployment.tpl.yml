@@ -35,7 +35,7 @@ spec:
             - containerPort: 3000
               name: http
           securityContext:
-            runAsUser: 1000
+            runAsUser: 1001
             runAsNonRoot: true
             allowPrivilegeEscalation: false
             capabilities:
@@ -43,5 +43,3 @@ spec:
           envFrom:
             - configMapRef:
                 name: ${KUBE_NAMESPACE}
-            - secretRef:
-                name: ${KUBE_NAMESPACE}-secrets
