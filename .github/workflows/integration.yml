@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - 'change-to-main-when-ready-to-deploy'
+      - 'main'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
